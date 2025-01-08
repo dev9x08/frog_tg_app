@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PropsWithChildren } from "react";
 import { ToastContainer } from "react-toastify";
-import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import {TonConnectUIProvider } from "@tonconnect/ui-react";
 
 import "react-toastify/dist/ReactToastify.css";
 
