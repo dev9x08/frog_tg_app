@@ -4,16 +4,34 @@ import { Link } from "react-router-dom";
 import UserGameDetails from "@/components/UserGameDetails";
 import levelConfig from "@/config/level-config";
 import { uesStore } from "@/store";
-import { useAccount, useConnect, useDisconnect} from 'wagmi'
+import { useAccount, useDisconnect} from 'wagmi'
+// import { useEffect } from "react";
 
 export default function Home() {
   const user = useUserStore();
   const { maxLevel } = uesStore();
 
+
+
   const {isConnected, address} = useAccount()
-  const { connectors, connect} = useConnect()
+  // const { connect} = useConnect()
   const { disconnect } = useDisconnect();
-  const metaMaskConnector = connectors.find((connector) => connector.id === 'injected');
+  // const metaMaskConnector = connectors.find((connector) => connector.id === 'injected');
+
+  const handleConnect = async () => {
+    try {
+      if (typeof window.ethereum !== 'undefined') {
+        console.log("****")
+      } else {
+        window.open('https://metamask.io/download/', '_blank')
+      }
+    } catch (error) {
+      console.error('Failed to connect:', error)
+    }
+  }
+
+
+
 
   return (
     <div
@@ -24,22 +42,22 @@ export default function Home() {
     >
 
 {isConnected ? (
-					<button
-					type="button"
-					onClick={() => disconnect()}
-					className="text-eclipse text-ellipsis whitespace-nowrap overflow-hidden w-full"
-					>
-					{`${address?.slice(0, 6)}...${address?.slice(-4)}`}
-					</button>
-				) : metaMaskConnector ? (
-					<button
-					type="button"
-					onClick={() => connect({ connector: metaMaskConnector })}
-					className="w-full"
-					>
-					Connect
-					</button>
-				) : null}
+          <button
+            type="button"
+            onClick={() => disconnect()}
+            className="text-eclipse text-ellipsis whitespace-nowrap overflow-hidden w-full"
+          >
+            {`${address?.slice(0, 6)}...${address?.slice(-4)}`}
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleConnect}
+            className="w-full"
+          >
+            Connect MetaMask
+          </button>
+        )}
 
 
 
