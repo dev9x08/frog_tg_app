@@ -1,11 +1,12 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { WagmiProvider } from "wagmi";
+// import { WagmiProvider } from "wagmi";
 import { PropsWithChildren } from "react";
 import { ToastContainer } from "react-toastify";
 // import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import { MetaMaskProvider } from "@metamask/sdk-react";
 
 import "react-toastify/dist/ReactToastify.css";
-import { config } from "./wagmi.ts";
+// import { config } from "./wagmi.ts";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,8 +18,17 @@ const queryClient = new QueryClient({
 
 export default function Providers({ children }: PropsWithChildren) {
   return (
-    <WagmiProvider config={config}>
+    // <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
+    <MetaMaskProvider
+      debug={false}
+      sdkOptions={{
+        dappMetadata: {
+          name: "Lit Telegram Mini App",
+          url: window.location.href,
+        },
+      }}
+    >
         {children}
         <ToastContainer
           theme="dark"
@@ -26,7 +36,8 @@ export default function Providers({ children }: PropsWithChildren) {
           hideProgressBar
           stacked
         />
+        </MetaMaskProvider>
       </QueryClientProvider>
-    </WagmiProvider>
+    // </WagmiProvider>
   );
 }

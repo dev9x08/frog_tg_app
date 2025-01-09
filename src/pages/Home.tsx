@@ -4,10 +4,40 @@ import { Link } from "react-router-dom";
 import UserGameDetails from "@/components/UserGameDetails";
 import levelConfig from "@/config/level-config";
 import { uesStore } from "@/store";
+import { useSDK } from "@metamask/sdk-react";
+// import { useState } from "react";
 
 export default function Home() {
+  // const [webApp, setWebApp] = useState();
   const user = useUserStore();
   const { maxLevel } = uesStore();
+  // const [account, setAccount] = useState(null);
+  // const tgApp = window.Telegram?.WebApp;
+  // setWebApp(tgApp);
+  const { sdk, connected} = useSDK();
+
+  const connect = async () => {
+    try {
+      const accounts = await sdk?.connect();
+      console.log(accounts);
+      // setAccount(accounts?.[0]);
+      // webApp!.showPopup({
+      //   title: "Connected",
+      //   message: `Connected to MetaMask with account: ${accounts[0]}`,
+      //   buttons: [{ text: "Close", type: "close" }],
+      // });
+    } catch (err) {
+      console.warn("failed to connect..", err);
+    }
+  };
+
+  // const mintPkp = async () => {
+  //   const pkp = await mintNewPkp(provider);
+  //   setPkp(pkp);
+  // };
+
+
+
 
   return (
     <div
@@ -16,6 +46,9 @@ export default function Home() {
         backgroundImage: `url(${levelConfig.bg[user?.level?.level || 1]})`,
       }}
     >
+      <button style={{ padding: 10, margin: 10 }} onClick={connect}>
+        {connected ? "Connect to MetaMask" : "Connected"}
+      </button>
       <header className="flex items-center justify-between mt-4">
         <div className="flex items-center gap-2 px-3 py-2 border-2 rounded-full bg-black/20 border-white/10">
           <img
