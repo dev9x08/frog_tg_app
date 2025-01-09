@@ -4,34 +4,10 @@ import { Link } from "react-router-dom";
 import UserGameDetails from "@/components/UserGameDetails";
 import levelConfig from "@/config/level-config";
 import { uesStore } from "@/store";
-import { useAccount, useDisconnect} from 'wagmi'
-// import { useEffect } from "react";
 
 export default function Home() {
   const user = useUserStore();
   const { maxLevel } = uesStore();
-
-
-
-  const {isConnected, address} = useAccount()
-  // const { connect} = useConnect()
-  const { disconnect } = useDisconnect();
-  // const metaMaskConnector = connectors.find((connector) => connector.id === 'injected');
-
-  const handleConnect = async () => {
-    try {
-      if (typeof window.ethereum !== 'undefined') {
-        console.log("****")
-      } else {
-        window.open('https://metamask.io/download/', '_blank')
-      }
-    } catch (error) {
-      console.error('Failed to connect:', error)
-    }
-  }
-
-
-
 
   return (
     <div
@@ -40,27 +16,6 @@ export default function Home() {
         backgroundImage: `url(${levelConfig.bg[user?.level?.level || 1]})`,
       }}
     >
-
-{isConnected ? (
-          <button
-            type="button"
-            onClick={() => disconnect()}
-            className="text-eclipse text-ellipsis whitespace-nowrap overflow-hidden w-full"
-          >
-            {`${address?.slice(0, 6)}...${address?.slice(-4)}`}
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={handleConnect}
-            className="w-full"
-          >
-            Connect MetaMask
-          </button>
-        )}
-
-
-
       <header className="flex items-center justify-between mt-4">
         <div className="flex items-center gap-2 px-3 py-2 border-2 rounded-full bg-black/20 border-white/10">
           <img
