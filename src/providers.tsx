@@ -1,9 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { WagmiProvider } from "wagmi";
 import { PropsWithChildren } from "react";
 import { ToastContainer } from "react-toastify";
-import {TonConnectUIProvider } from "@tonconnect/ui-react";
+// import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
 import "react-toastify/dist/ReactToastify.css";
+import { config } from "./wagmi.ts";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,19 +17,16 @@ const queryClient = new QueryClient({
 
 export default function Providers({ children }: PropsWithChildren) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TonConnectUIProvider
-        manifestUrl={`${import.meta.env.VITE_APP_URL}/tonconnect-manifest.json`}
-      >
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
         {children}
-      </TonConnectUIProvider>
-
-      <ToastContainer
-        theme="dark"
-        position="top-center"
-        hideProgressBar
-        stacked
-      />
-    </QueryClientProvider>
+        <ToastContainer
+          theme="dark"
+          position="top-center"
+          hideProgressBar
+          stacked
+        />
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 }

@@ -4,11 +4,17 @@ import { Link } from "react-router-dom";
 import UserGameDetails from "@/components/UserGameDetails";
 import levelConfig from "@/config/level-config";
 import { uesStore } from "@/store";
+import { useAccount, useConnect, useDisconnect} from 'wagmi'
 
 export default function Home() {
   const user = useUserStore();
   const { maxLevel } = uesStore();
-  console.log(user,"*******")
+
+  const {isConnected, address} = useAccount()
+  const { connectors, connect} = useConnect()
+  const { disconnect } = useDisconnect();
+  const metaMaskConnector = connectors.find((connector) => connector.id === 'injected');
+
   return (
     <div
       className="flex-1 px-5 pb-20 bg-center bg-cover"
@@ -16,6 +22,27 @@ export default function Home() {
         backgroundImage: `url(${levelConfig.bg[user?.level?.level || 1]})`,
       }}
     >
+
+{isConnected ? (
+					<button
+					type="button"
+					onClick={() => disconnect()}
+					className="text-eclipse text-ellipsis whitespace-nowrap overflow-hidden w-full"
+					>
+					{`${address?.slice(0, 6)}...${address?.slice(-4)}`}
+					</button>
+				) : metaMaskConnector ? (
+					<button
+					type="button"
+					onClick={() => connect({ connector: metaMaskConnector })}
+					className="w-full"
+					>
+					Connect
+					</button>
+				) : null}
+
+
+
       <header className="flex items-center justify-between mt-4">
         <div className="flex items-center gap-2 px-3 py-2 border-2 rounded-full bg-black/20 border-white/10">
           <img
