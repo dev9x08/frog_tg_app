@@ -5,32 +5,33 @@ import UserGameDetails from "@/components/UserGameDetails";
 import levelConfig from "@/config/level-config";
 import { uesStore } from "@/store";
 import { useSDK } from "@metamask/sdk-react";
+import { useState } from "react";
 // import { useState } from "react";
 
 export default function Home() {
   // const [webApp, setWebApp] = useState();
   const user = useUserStore();
   const { maxLevel } = uesStore();
-  // const [account, setAccount] = useState(null);
+  const [account, setAccount] = useState<string | null>(null);
   // const tgApp = window.Telegram?.WebApp;
   // setWebApp(tgApp);
   const { sdk, connected} = useSDK();
+  const webApp = window.Telegram.WebApp;
 
   const connect = async () => {
-    try {
+console.log("account => ", account);
       const accounts = await sdk?.connect();
       console.log(accounts);
-      // setAccount(accounts?.[0]);
-      // webApp!.showPopup({
-      //   title: "Connected",
-      //   message: `Connected to MetaMask with account: ${accounts[0]}`,
-      //   buttons: [{ text: "Close", type: "close" }],
-      // });
-    } catch (err) {
-      console.warn("failed to connect..", err);
+      if (accounts?.[0]) {
+        setAccount(accounts[0]);
+        webApp?.showPopup({
+          title: "Connected", 
+          message: `Connected to MetaMask with account: ${accounts[0]}`,
+          buttons: [{ text: "Close", type: "close" }],
+      });
     }
   };
-
+console.log(connected, "**************")
   // const mintPkp = async () => {
   //   const pkp = await mintNewPkp(provider);
   //   setPkp(pkp);

@@ -24,7 +24,7 @@ export default function Providers({ children }: PropsWithChildren) {
       debug={false}
       sdkOptions={{
         dappMetadata: {
-          name: "Lit Telegram Mini App",
+          name: "Telegram Mini App",
           url: window.location.href,
         },
       }}
