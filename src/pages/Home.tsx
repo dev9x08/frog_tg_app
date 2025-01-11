@@ -4,60 +4,68 @@ import { Link } from "react-router-dom";
 import UserGameDetails from "@/components/UserGameDetails";
 import levelConfig from "@/config/level-config";
 import { uesStore } from "@/store";
-import { useSDK } from "@metamask/sdk-react";
-import { useState } from "react";
-import { $http } from "@/lib/http";
+// import { useSDK } from "@metamask/sdk-react";
+// import { useState } from "react";
+// import { $http } from "@/lib/http";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+// import { Web3Button } from "@web3modal/react";
 // import { useState } from "react";
 
 export default function Home() {
+  const { address, isConnected } = useAccount();
+  console.log(address, isConnected,"************");  
+  const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
+  console.log(address, isConnected, connect, connectors);
   // const [webApp, setWebApp] = useState();
   const user = useUserStore();
   const { maxLevel } = uesStore();
-  const [account, setAccount] = useState<string | null>(null);
+  const InjectedConnector = connectors.find((connector) => connector.id === 'injected');
+  // const [account, setAccount] = useState<string | null>(null);
   // const tgApp = window.Telegram?.WebApp;
   // setWebApp(tgApp);
-  const { sdk, connected } = useSDK();
+  // const { sdk, connected } = useSDK();
 
-  const webApp = window.Telegram?.WebApp;
+  // const webApp = window.Telegram?.WebApp;
 
-  const connect = async () => {
-    console.log(account);
+  // const connect = async () => {
+  //   console.log(account);
 
-    const accounts = await sdk?.connect();
-    console.log(accounts);
-    if (accounts?.[0]) {
-      // $http.post("/clicker/transfertoken", {
-      //   to_address: accounts[0],
-      //   amount: 20
-      // })
-      // .then(res=> {console.log(res,"res in transfer")});
+  //   const accounts = await sdk?.connect();
+  //   console.log(accounts);
+  //   if (accounts?.[0]) {
+  //     // $http.post("/clicker/transfertoken", {
+  //     //   to_address: accounts[0],
+  //     //   amount: 20
+  //     // })
+  //     // .then(res=> {console.log(res,"res in transfer")});
 
-      $http
-        .post("/clicker/set-wallet", {
-          wallet: accounts[0],
-        })
-        .then((res) => {
-          console.log(res);
-        });
+  //     $http
+  //       .post("/clicker/set-wallet", {
+  //         wallet: accounts[0],
+  //       })
+  //       .then((res) => {
+  //         console.log(res);
+  //       });
 
-      setAccount(accounts[0]);
-      webApp?.showPopup({
-        title: "Connected",
-        message: `Connected to MetaMask with account: ${accounts[0]}`,
-        buttons: [{ text: "Close", type: "close" }],
-      });
-    }
-  };
+  //     setAccount(accounts[0]);
+  //     webApp?.showPopup({
+  //       title: "Connected",
+  //       message: `Connected to MetaMask with account: ${accounts[0]}`,
+  //       buttons: [{ text: "Close", type: "close" }],
+  //     });
+  //   }
+  // };
 
-  const disconnect = async () => {
-    await sdk?.terminate();
-    setAccount(null);
-    webApp?.showPopup({
-      title: "Disconnected",
-      message: `Disconnected from MetaMask`,
-      buttons: [{ text: "Close", type: "close" }],
-    });
-  };
+  // const disconnect = async () => {
+  //   await sdk?.terminate();
+  //   setAccount(null);
+  //   webApp?.showPopup({
+  //     title: "Disconnected",
+  //     message: `Disconnected from MetaMask`,
+  //     buttons: [{ text: "Close", type: "close" }],
+  //   });
+  // };
 
   return (
     <div
@@ -78,14 +86,16 @@ export default function Home() {
           </p>
         </div>
         <div className="flex items-center gap-2 px-3 border-2 rounded-full bg-black/20 border-white/10">
-          {connected ? (
-            <button style={{ padding: 6, margin: 6 }} onClick={disconnect}>
-              DisConnect
-            </button>
+          {isConnected ? (
+            <button onClick={() => disconnect()}>{address}</button>
           ) : (
-            <button style={{ padding: 6, margin: 6 }} onClick={connect}>
-              Connect Wallet
-            </button>
+            <button
+              type="button"
+              onClick={() => connect({ connector: InjectedConnector })}
+              className="w-full"
+              >
+					Connect
+					</button>
           )}
         </div>
       </header>
