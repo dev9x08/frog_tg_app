@@ -77,13 +77,13 @@ export default function Home() {
             {user?.first_name} {user?.last_name}
           </p>
         </div>
-        <div>
+        <div className="flex items-center gap-2 px-3 border-2 rounded-full bg-black/20 border-white/10">
           {connected ? (
-            <button style={{ padding: 10, margin: 10 }} onClick={disconnect}>
+            <button style={{ padding: 6, margin: 6 }} onClick={disconnect}>
               DisConnect
             </button>
           ) : (
-            <button style={{ padding: 10, margin: 10 }} onClick={connect}>
+            <button style={{ padding: 6, margin: 6 }} onClick={connect}>
               Connect Wallet
             </button>
           )}
