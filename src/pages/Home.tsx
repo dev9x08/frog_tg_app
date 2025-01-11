@@ -6,14 +6,28 @@ import levelConfig from "@/config/level-config";
 import { uesStore } from "@/store";
 // import { useSDK } from "@metamask/sdk-react";
 // import { useState } from "react";
-// import { $http } from "@/lib/http";
+import { $http } from "@/lib/http";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useEffect } from "react";
 // import { Web3Button } from "@web3modal/react";
 // import { useState } from "react";
 
+
+const isTelegramWebApp = () => {
+  // Check if we're in Telegram WebApp
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return (
+    window.Telegram?.WebApp &&
+    (userAgent.includes('telegram') || // Check user agent
+    window.location.href.includes('tgWebApp') || // Check URL
+    !!window.Telegram.WebApp.initData) // Check initData
+  );
+};
+
+
+
 export default function Home() {
   const { address, isConnected } = useAccount();
-  console.log(address, isConnected,"************");  
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   console.log(address, isConnected, connect, connectors);
@@ -21,7 +35,7 @@ export default function Home() {
   const user = useUserStore();
   const { maxLevel } = uesStore();
   const InjectedConnector = connectors.find((connector) => connector.id === 'injected');
- 
+  const webApp = window.Telegram?.WebApp;
   // const [account, setAccount] = useState<string | null>(null);
   // const tgApp = window.Telegram?.WebApp;
   // setWebApp(tgApp);
@@ -68,6 +82,89 @@ export default function Home() {
   //   });
   // };
 
+
+  const handleConnect = async () => {
+    try {
+      console.log(webApp,"************");
+      if (isTelegramWebApp()) {
+        // Telegram-specific wallet connection
+        webApp.showPopup({
+          title: "Connect Wallet",
+          message: "Please connect your wallet",
+          buttons: [
+            {
+              text: "Connect MetaMask",
+              type: "default",
+              id: "connect_metamask"
+            }
+          ]
+        }, async (buttonId) => {
+          if (buttonId === "connect_metamask") {
+            // Open MetaMask in external browser
+            webApp.openLink(`https://metamask.app.link/dapp/${window.location.href}`);
+          }
+        });
+      } else {
+        // Regular web browser wallet connection
+        if (InjectedConnector) {
+          await connect({ connector: InjectedConnector });
+        }
+      }
+    } catch (error) {
+      console.error('Wallet connection error:', error);
+      if (webApp) {
+        webApp.showAlert('Failed to connect wallet. Please try again.');
+      }
+    }
+  };
+
+  const handleDisconnect = async () => {
+    try {
+      if (isTelegramWebApp()) {
+        await disconnect();
+        webApp.showPopup({
+          title: "Disconnected",
+          message: "Wallet disconnected successfully",
+          buttons: [{ text: "Close", type: "close" }]
+        });
+      } else {
+        await disconnect();
+      }
+    } catch (error) {
+      console.error('Wallet disconnection error:', error);
+    }
+  };
+
+  // Handle successful connection
+  const handleSuccessfulConnection = async (walletAddress: string) => {
+    try {
+      // Update wallet address in your backend
+      await $http.post("/clicker/set-wallet", {
+        wallet: walletAddress,
+      });
+      
+      if (isTelegramWebApp()) {
+        webApp.showPopup({
+          title: "Connected",
+          message: `Connected with wallet: ${walletAddress}`,
+          buttons: [{ text: "Close", type: "close" }]
+        });
+      }
+    } catch (error) {
+      console.error('Error updating wallet:', error);
+    }
+  };
+
+
+  useEffect(() => {
+    if (address && isConnected) {
+      handleSuccessfulConnection(address);
+    }
+  }, [address, isConnected]);
+
+
+
+
   return (
     <div
       className="flex-1 px-5 pb-20 bg-center bg-cover"
@@ -87,15 +184,17 @@ export default function Home() {
           </p>
         </div>
         <div className="flex items-center gap-2 px-3 border-2 rounded-full bg-black/20 border-white/10">
-          {isConnected ? (
-            <button onClick={() => disconnect()}>{address}</button>
+        {isConnected ? (
+            <button onClick={handleDisconnect}>
+              {address?.slice(0, 6)}...{address?.slice(-4)}
+            </button>
           ) : (
             <button
               type="button"
-              onClick={() => InjectedConnector && connect({ connector: InjectedConnector })}
-              >
-					Connect
-					</button>
+              onClick={handleConnect}
+            >
+              Connect
+            </button>
           )}
         </div>
       </header>
