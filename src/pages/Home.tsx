@@ -21,6 +21,7 @@ export default function Home() {
   const user = useUserStore();
   const { maxLevel } = uesStore();
   const InjectedConnector = connectors.find((connector) => connector.id === 'injected');
+ 
   // const [account, setAccount] = useState<string | null>(null);
   // const tgApp = window.Telegram?.WebApp;
   // setWebApp(tgApp);
@@ -91,8 +92,7 @@ export default function Home() {
           ) : (
             <button
               type="button"
-              onClick={() => connect({ connector: InjectedConnector })}
-              className="w-full"
+              onClick={() => InjectedConnector && connect({ connector: InjectedConnector })}
               >
 					Connect
 					</button>
