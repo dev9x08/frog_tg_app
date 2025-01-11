@@ -6,6 +6,7 @@ import levelConfig from "@/config/level-config";
 import { uesStore } from "@/store";
 import { useSDK } from "@metamask/sdk-react";
 import { useState } from "react";
+import { $http } from "@/lib/http";
 // import { useState } from "react";
 
 export default function Home() {
@@ -15,30 +16,48 @@ export default function Home() {
   const [account, setAccount] = useState<string | null>(null);
   // const tgApp = window.Telegram?.WebApp;
   // setWebApp(tgApp);
-  const { sdk, connected} = useSDK();
-  const webApp = window.Telegram.WebApp;
+  const { sdk, connected } = useSDK();
+
+  const webApp = window.Telegram?.WebApp;
 
   const connect = async () => {
-console.log("account => ", account);
-      const accounts = await sdk?.connect();
-      console.log(accounts);
-      if (accounts?.[0]) {
-        setAccount(accounts[0]);
-        webApp?.showPopup({
-          title: "Connected", 
-          message: `Connected to MetaMask with account: ${accounts[0]}`,
-          buttons: [{ text: "Close", type: "close" }],
+    console.log(account);
+
+    const accounts = await sdk?.connect();
+    console.log(accounts);
+    if (accounts?.[0]) {
+      // $http.post("/clicker/transfertoken", {
+      //   to_address: accounts[0],
+      //   amount: 20
+      // })
+      // .then(res=> {console.log(res,"res in transfer")});
+
+      $http
+        .post("/clicker/set-wallet", {
+          wallet: accounts[0],
+        })
+        .then((res) => {
+          console.log(res);
+        });
+
+      setAccount(accounts[0]);
+      webApp?.showPopup({
+        title: "Connected",
+        message: `Connected to MetaMask with account: ${accounts[0]}`,
+        buttons: [{ text: "Close", type: "close" }],
       });
     }
   };
-console.log(connected, "**************")
-  // const mintPkp = async () => {
-  //   const pkp = await mintNewPkp(provider);
-  //   setPkp(pkp);
-  // };
 
-
-
+  const disconnect = async () => {
+    await sdk?.terminate();
+    setAccount(null);
+    webApp?.showPopup({
+      title: "Disconnected",
+      message: `Disconnected from MetaMask`,
+      buttons: [{ text: "Close", type: "close" }],
+    });
+  };
 
   return (
     <div
@@ -47,9 +66,6 @@ console.log(connected, "**************")
         backgroundImage: `url(${levelConfig.bg[user?.level?.level || 1]})`,
       }}
     >
-      <button style={{ padding: 10, margin: 10 }} onClick={connect}>
-        {connected ? "Connect to MetaMask" : "Connected"}
-      </button>
       <header className="flex items-center justify-between mt-4">
         <div className="flex items-center gap-2 px-3 py-2 border-2 rounded-full bg-black/20 border-white/10">
           <img
@@ -60,6 +76,17 @@ console.log(connected, "**************")
           <p className="text-sm font-medium uppercase">
             {user?.first_name} {user?.last_name}
           </p>
+        </div>
+        <div>
+          {connected ? (
+            <button style={{ padding: 10, margin: 10 }} onClick={disconnect}>
+              DisConnect
+            </button>
+          ) : (
+            <button style={{ padding: 10, margin: 10 }} onClick={connect}>
+              Connect Wallet
+            </button>
+          )}
         </div>
       </header>
       <UserGameDetails className="mt-6" />
@@ -90,10 +117,12 @@ console.log(connected, "**************")
         </Link>
         <div className="bg-[#FFDAA3]/10 border overflow-hidden border-[#FFDAA3]/10 rounded-full mt-2 h-4 w-full">
           <div
-            className="bg-[linear-gradient(180deg,#FBEDE0_0%,#F7B87D_21%,#F3A155_52%,#E6824B_84%,#D36224_100%)] h-full"
-            style={{
-              width: `${(user.balance! / user.level!.to_balance) * 100}%`,
-            }}
+            className="bg-[linear-gradient(180deg,#
+            
+            %,#F7B87D_21%,#F3A155_52%,#E6824B_84%,#D36224_100%)] h-full"
+            // style={{
+            //   width: `${(user.balance! / user.level!.to_balance) * 100}%`,
+            // }}
           ></div>
         </div>
       </div>

@@ -115,7 +115,7 @@ function App() {
 
     signIn().then(() => setShowSplashScreen(false));
   }, [user]);
-console.log(user, isDisktop);
+
   if (!user || isDisktop) return <PlayOnYourMobile />;
 
   if (showSplashScreen) return <SplashScreen />;
