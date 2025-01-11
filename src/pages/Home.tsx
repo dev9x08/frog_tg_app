@@ -100,8 +100,29 @@ export default function Home() {
           ]
         }, async (buttonId) => {
           if (buttonId === "connect_metamask") {
-            // Open MetaMask in external browser
+            // Open MetaMask in external browser and request account access
             webApp.openLink(`https://metamask.app.link/dapp/${window.location.href}`);
+            
+            // Listen for MetaMask connection events
+            if (typeof window.ethereum !== 'undefined') {
+              try {
+                // Request account access
+                const accounts = await window.ethereum.request({ 
+                  method: 'eth_requestAccounts' 
+                });
+                console.log(accounts,"*******accounts*****");
+                // Get the connected wallet address
+                const walletAddress = accounts[0];
+                
+                // Handle the successful connection
+                await handleSuccessfulConnection(walletAddress);
+              } catch (error) {
+                console.error('Error connecting wallet:', error);
+                webApp.showAlert('Failed to connect wallet. Please try again.');
+              }
+            } else {
+              webApp.showAlert('MetaMask not detected. Please install MetaMask first.');
+            }
           }
         });
       } else {
