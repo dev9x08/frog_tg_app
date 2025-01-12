@@ -88,13 +88,13 @@ export default function Home() {
         wallet: walletAddress,
       });
       
-      if (isTelegramWebApp()) {
-        webApp.showPopup({
-          title: "Connected",
-          message: `Connected with wallet: ${walletAddress}`,
-          buttons: [{ text: "Close", type: "close" }]
-        });
-      }
+      // if (isTelegramWebApp()) {
+      //   webApp.showPopup({
+      //     title: "Connected",
+      //     message: `Connected with wallet: ${walletAddress}`,
+      //     buttons: [{ text: "Close", type: "close" }]
+      //   });
+      // }
     } catch (error) {
       console.error('Error updating wallet:', error);
     }

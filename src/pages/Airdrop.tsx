@@ -88,13 +88,13 @@ export default function Airdrop() {
         wallet: walletAddress,
       });
 
-      if (isTelegramWebApp()) {
-        webApp.showPopup({
-          title: "Connected",
-          message: `Connected with wallet: ${walletAddress}`,
-          buttons: [{ text: "Close", type: "close" }],
-        });
-      }
+      // if (isTelegramWebApp()) {
+      //   webApp.showPopup({
+      //     title: "Connected",
+      //     message: `Connected with wallet: ${walletAddress}`,
+      //     buttons: [{ text: "Close", type: "close" }],
+      //   });
+      // }
     } catch (error) {
       console.error("Error updating wallet:", error);
     }
@@ -135,13 +135,13 @@ export default function Airdrop() {
           toast.error("Error claiming tokens");
         });
 
-      if (isTelegramWebApp()) {
-        webApp.showPopup({
-          title: "Claimed",
-          message: `Claimed ${user.balance} tokens`,
-          buttons: [{ text: "Close", type: "close" }],
-        });
-      }
+      // if (isTelegramWebApp()) {
+      //   webApp.showPopup({
+      //     title: "Claimed",
+      //     message: `Claimed ${user.balance} tokens`,
+      //     buttons: [{ text: "Close", type: "close" }],
+      //   });
+      // }
     } catch (error) {
       console.error("Error claiming tokens:", error);
     }
