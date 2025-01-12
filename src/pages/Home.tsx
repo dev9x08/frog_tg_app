@@ -27,95 +27,45 @@ export default function Home() {
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   console.log(address, isConnected, connect, connectors);
-  // const [webApp, setWebApp] = useState();
   const user = useUserStore();
   const { maxLevel } = uesStore();
   const InjectedConnector = connectors.find((connector) => connector.id === 'injected');
   const webApp = window.Telegram?.WebApp;
-  // const [account, setAccount] = useState<string | null>(null);
-  // const tgApp = window.Telegram?.WebApp;
-  // setWebApp(tgApp);
-  // const { sdk, connected } = useSDK();
-
-  // const webApp = window.Telegram?.WebApp;
-
-  // const connect = async () => {
-  //   console.log(account);
-
-  //   const accounts = await sdk?.connect();
-  //   console.log(accounts);
-  //   if (accounts?.[0]) {
-  //     // $http.post("/clicker/transfertoken", {
-  //     //   to_address: accounts[0],
-  //     //   amount: 20
-  //     // })
-  //     // .then(res=> {console.log(res,"res in transfer")});
-
-  //     $http
-  //       .post("/clicker/set-wallet", {
-  //         wallet: accounts[0],
-  //       })
-  //       .then((res) => {
-  //         console.log(res);
-  //       });
-
-  //     setAccount(accounts[0]);
-  //     webApp?.showPopup({
-  //       title: "Connected",
-  //       message: `Connected to MetaMask with account: ${accounts[0]}`,
-  //       buttons: [{ text: "Close", type: "close" }],
-  //     });
-  //   }
-  // };
-
-  // const disconnect = async () => {
-  //   await sdk?.terminate();
-  //   setAccount(null);
-  //   webApp?.showPopup({
-  //     title: "Disconnected",
-  //     message: `Disconnected from MetaMask`,
-  //     buttons: [{ text: "Close", type: "close" }],
-  //   });
-  // };
-
 
   const handleConnect = async () => {
     try {
-      // if (isTelegramWebApp()) {
-      //   webApp.showPopup({
-      //     title: "Connect Wallet",
-      //     message: "Please connect your wallet",
-      //     buttons: [
-      //       {
-      //         text: "Connect MetaMask",
-      //         type: "default",
-      //         id: "connect_metamask"
-      //       }
-      //     ]
-      //   }, async (buttonId) => {
-      //     if (buttonId === "connect_metamask") {
-      //       webApp.openLink(`https://metamask.app.link/dapp/${window.location.href}`);
-      //       if (typeof window.ethereum !== 'undefined') {
-      //         try {
-      //           const accounts = await window.ethereum.request({ 
-      //             method: 'eth_requestAccounts' 
-      //           });
-      //           const walletAddress = accounts[0];
-      //           await handleSuccessfulConnection(walletAddress);
-      //         } catch (error) {
-      //           console.error('Error connecting wallet:', error);
-      //           webApp.showAlert('Failed to connect wallet. Please try again.');
-      //         }
-      //       } else {
-      //         webApp.showAlert('MetaMask not detected. Please install MetaMask first.');
-      //       }
-      //     }
-      //   });
-      // } else {
-        if (InjectedConnector) {
-          await connect({ connector: InjectedConnector });
-        // }
-      }
+        const hasWallet = typeof window.ethereum !== "undefined";  
+        if (!hasWallet) {
+          if (webApp) {
+            webApp.showPopup({
+              title: "Wallet Required",
+              message: "Please install MetaMask or another Web3 wallet to continue",
+              buttons: [
+                {
+                  text: "Install MetaMask",
+                  type: "default",
+                  id: "install_metamask"
+                },
+                {
+                  text: "Close",
+                  type: "close"
+                }
+              ]
+            }, (buttonId) => {
+              if (buttonId === "install_metamask") {
+                window.open("https://metamask.io/download/", "_blank");
+              }
+            });
+          } else {
+            window.open("https://metamask.io/download/", "_blank");
+          }
+          return;
+        }
+        else {
+          if(InjectedConnector) {
+            await connect({ connector: InjectedConnector });
+          }
+        }
     } catch (error) {
       console.error('Wallet connection error:', error);
       if (webApp) {
@@ -126,16 +76,7 @@ export default function Home() {
 
   const handleDisconnect = async () => {
     try {
-      if (isTelegramWebApp()) {
         await disconnect();
-        webApp.showPopup({
-          title: "Disconnected",
-          message: "Wallet disconnected successfully",
-          buttons: [{ text: "Close", type: "close" }]
-        });
-      } else {
-        await disconnect();
-      }
     } catch (error) {
       console.error('Wallet disconnection error:', error);
     }
