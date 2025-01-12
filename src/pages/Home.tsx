@@ -128,14 +128,19 @@ export default function Home() {
         </div>
         <div className="flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 border-2 rounded-full bg-black/20 border-white/10">
         {isConnected ? (
-            <button onClick={handleDisconnect} className="h-6 sm:h-8 text-xs sm:text-sm">
+            <button 
+              onClick={handleDisconnect} 
+              className="h-6 sm:h-8 text-xs sm:text-sm w-full"
+              style={{cursor: 'pointer'}}
+            >
               {address?.slice(0, 6)}...{address?.slice(-4)}
             </button>
           ) : (
             <button
               type="button"
               onClick={handleConnect}
-              className="h-6 sm:h-8 text-xs sm:text-sm"
+              className="h-6 sm:h-8 text-xs sm:text-sm w-full" 
+              style={{cursor: 'pointer'}}
             >
               Connect Wallet
             </button>
