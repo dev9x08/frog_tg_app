@@ -192,7 +192,7 @@ export default function Airdrop() {
             tokens will expire after days specified.
           </div>
 
-          <div className="flex items-center justify-center mt-10">
+          <div className="flex items-center justify-center mt-5">
             {isConnected ? (
               <button
                 onClick={handleDisconnect}
@@ -211,7 +211,7 @@ export default function Airdrop() {
             )}
           </div>
 
-          <div className="flex items-center justify-center mt-10">
+          <div className="flex items-center justify-center mt-5">
             <button
               className="flex items-center gap-2 px-10 py-2 border-2 rounded-full bg-black/20 border-white/10 mt-10"
               onClick={handleClaim}
