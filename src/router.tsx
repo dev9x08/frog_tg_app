@@ -6,6 +6,7 @@ import Leaderboard from "./pages/Leaderboard";
 import Earn from "./pages/Earn";
 import Friends from "./pages/Friends";
 import Missions from "./pages/Missions";
+import Airdrop from "./pages/Airdrop";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "missions",
         element: <Missions />,
+      },
+      {
+        path: "airdrop",
+        element: <Airdrop />,
       },
     ],
   },

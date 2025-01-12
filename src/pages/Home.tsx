@@ -4,23 +4,19 @@ import { Link } from "react-router-dom";
 import UserGameDetails from "@/components/UserGameDetails";
 import levelConfig from "@/config/level-config";
 import { uesStore } from "@/store";
-// import { useSDK } from "@metamask/sdk-react";
-// import { useState } from "react";
 import { $http } from "@/lib/http";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { useEffect } from "react";
-// import { Web3Button } from "@web3modal/react";
-// import { useState } from "react";
 
 
 const isTelegramWebApp = () => {
-  // Check if we're in Telegram WebApp
+
   const userAgent = window.navigator.userAgent.toLowerCase();
   return (
     window.Telegram?.WebApp &&
-    (userAgent.includes('telegram') || // Check user agent
-    window.location.href.includes('tgWebApp') || // Check URL
-    !!window.Telegram.WebApp.initData) // Check initData
+    (userAgent.includes('telegram') || 
+    window.location.href.includes('tgWebApp') || 
+    !!window.Telegram.WebApp.initData) 
   );
 };
 
@@ -85,9 +81,7 @@ export default function Home() {
 
   const handleConnect = async () => {
     try {
-      console.log(webApp,"************");
       if (isTelegramWebApp()) {
-        // Telegram-specific wallet connection
         webApp.showPopup({
           title: "Connect Wallet",
           message: "Please connect your wallet",
@@ -100,21 +94,13 @@ export default function Home() {
           ]
         }, async (buttonId) => {
           if (buttonId === "connect_metamask") {
-            // Open MetaMask in external browser and request account access
             webApp.openLink(`https://metamask.app.link/dapp/${window.location.href}`);
-            
-            // Listen for MetaMask connection events
             if (typeof window.ethereum !== 'undefined') {
               try {
-                // Request account access
                 const accounts = await window.ethereum.request({ 
                   method: 'eth_requestAccounts' 
                 });
-                console.log(accounts,"*******accounts*****");
-                // Get the connected wallet address
                 const walletAddress = accounts[0];
-                
-                // Handle the successful connection
                 await handleSuccessfulConnection(walletAddress);
               } catch (error) {
                 console.error('Error connecting wallet:', error);
@@ -126,7 +112,6 @@ export default function Home() {
           }
         });
       } else {
-        // Regular web browser wallet connection
         if (InjectedConnector) {
           await connect({ connector: InjectedConnector });
         }
@@ -156,10 +141,8 @@ export default function Home() {
     }
   };
 
-  // Handle successful connection
   const handleSuccessfulConnection = async (walletAddress: string) => {
     try {
-      // Update wallet address in your backend
       await $http.post("/clicker/set-wallet", {
         wallet: walletAddress,
       });
@@ -250,9 +233,9 @@ export default function Home() {
             className="bg-[linear-gradient(180deg,#
             
             %,#F7B87D_21%,#F3A155_52%,#E6824B_84%,#D36224_100%)] h-full"
-            // style={{
-            //   width: `${(user.balance! / user.level!.to_balance) * 100}%`,
-            // }}
+            style={{
+              width: `${(user.balance! / user.level!.to_balance) * 100}%`,
+            }}
           ></div>
         </div>
       </div>

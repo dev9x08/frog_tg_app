@@ -6,6 +6,7 @@ const links = [
   { name: "Missions", link: "/missions", image: "/images/missions.png" },
   { name: "Friends", link: "/friends", image: "/images/friends.png" },
   { name: "Bounty", link: "/earn", image: "/images/bounty.png" },
+  {name: "Airdrop", link: "/airdrop", image: "/images/airdrop.png"}
 ];
 
 export default function AppBar() {
