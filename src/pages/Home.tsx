@@ -118,13 +118,13 @@ export default function Home() {
       }}
     >
       <header className="flex items-center justify-between mt-4">
-        <div className="flex items-center gap-2 px-3 py-2 border-2 rounded-full bg-black/20 border-white/10">
+        <div className="max-w-1/2 flex items-center gap-2 px-3 py-2 border-2 rounded-full bg-black/20 border-white/10">
           <img
             src="/images/avatar.png"
             alt="user-avatar"
             className="object-cover w-8 h-8 rounded-full"
           />
-          <p className="text-sm font-medium uppercase">
+          <p className="text-sm font-medium uppercase truncate max-w-[150px]">
             {user?.first_name} {user?.last_name}
           </p>
         </div>
