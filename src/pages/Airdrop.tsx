@@ -162,10 +162,10 @@ export default function Airdrop() {
           </span>
         </div>
         <div className="mt-10">
-          <div className="text-center text-2xl font-bold">
+          <div className="text-center text-xl sm:text-2xl font-bold">
             Claim Your Tokens
           </div>
-          <div className="text-center text-lg text-white">
+          <div className="text-center text-sm sm:text-lg text-white">
             {
               isTelegramWebApp() ? "Claim your tokens by linking your wallet and joining the token access plan.":
               "Tokens earned today can be claimed immediately. Claim your tokens by linking your wallet and joining the token access plan. Unclaimed tokens will expire after days specified."

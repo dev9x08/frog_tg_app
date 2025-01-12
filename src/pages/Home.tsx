@@ -115,27 +115,27 @@ export default function Home() {
         backgroundImage: `url(${levelConfig.bg[user?.level?.level || 1]})`,
       }}
     >
-      <header className="flex items-center justify-between mt-4">
-        <div className="max-w-1/2 flex items-center gap-2 px-3 py-2 border-2 rounded-full bg-black/20 border-white/10">
+      <header className="flex items-center justify-between mt-4 flex-wrap gap-2 sm:flex-nowrap">
+        <div className="flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 border-2 rounded-full bg-black/20 border-white/10">
           <img
             src="/images/avatar.png"
             alt="user-avatar"
-            className="object-cover w-8 h-8 rounded-full"
+            className="object-cover w-6 h-6 sm:w-8 sm:h-8 rounded-full"
           />
-          <p className="text-sm font-medium uppercase truncate max-w-[150px]">
+          <p className="text-xs sm:text-sm font-medium uppercase truncate max-w-[100px] sm:max-w-[150px]">
             {user?.first_name} {user?.last_name}
           </p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-2 border-2 rounded-full bg-black/20 border-white/10">
+        <div className="flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 border-2 rounded-full bg-black/20 border-white/10">
         {isConnected ? (
-            <button onClick={handleDisconnect} className="h-8">
+            <button onClick={handleDisconnect} className="h-6 sm:h-8 text-xs sm:text-sm">
               {address?.slice(0, 6)}...{address?.slice(-4)}
             </button>
           ) : (
             <button
               type="button"
               onClick={handleConnect}
-              className="h-8"
+              className="h-6 sm:h-8 text-xs sm:text-sm"
             >
               Connect Wallet
             </button>

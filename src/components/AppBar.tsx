@@ -12,14 +12,14 @@ const links = [
 export default function AppBar() {
   const { pathname } = useLocation();
   return (
-    <div className="fixed left-0 z-10 w-full px-5 py-0 bottom-2">
-      <div className="flex items-center w-full p-2 gap-2 max-w-lg mx-auto rounded-[35px] bg-[linear-gradient(180deg,rgba(243,161,85,0.00)_66.37%,rgba(243,161,85,0.05)_100%)] backdrop-blur-3xl">
+    <div className="fixed left-0 z-10 w-full px-2 sm:px-5 py-0 bottom-2">
+      <div className="flex items-center w-full p-1 sm:p-2 gap-1 sm:gap-2 max-w-lg mx-auto rounded-[35px] bg-[linear-gradient(180deg,rgba(243,161,85,0.00)_66.37%,rgba(243,161,85,0.05)_100%)] backdrop-blur-3xl">
         {links.map((link, key) => (
           <Link
             key={key}
             to={link.link}
             className={cn(
-              "relative flex items-center rounded-xl flex-col justify-center font-bold text-xs px-2.5 py-1.5 gap-1 select-none flex-1 text-white/30",
+              "relative flex items-center rounded-xl flex-col justify-center font-bold text-[10px] sm:text-xs px-1 sm:px-2.5 py-1 sm:py-1.5 gap-0.5 sm:gap-1 select-none flex-1 text-white/30",
               pathname === link.link && " text-white"
             )}
           >
@@ -28,7 +28,7 @@ export default function AppBar() {
                 src={link.image}
                 alt={link.name}
                 className={cn(
-                  "w-7 h-7 object-contain filter grayscale",
+                  "w-5 h-5 sm:w-7 sm:h-7 object-contain filter grayscale",
                   pathname === link.link && "filter-none"
                 )}
               />

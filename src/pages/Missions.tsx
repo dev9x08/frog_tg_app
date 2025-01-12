@@ -95,7 +95,7 @@ export default function Missions() {
                       <img
                         src={mission.image}
                         alt={mission.name}
-                        className="object-contain w-16 h-16"
+                        className="object-contain w-12 h-12 sm:w-16 sm:h-16"
                       />
                       <div className="flex flex-col">
                         <p className="text-[10px] font-bold">{mission.name}</p>
