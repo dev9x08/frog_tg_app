@@ -108,8 +108,6 @@ export default function Home() {
   }, [address, isConnected]);
 
 
-
-
   return (
     <div
       className="flex-1 px-5 pb-20 bg-center bg-cover"
@@ -172,9 +170,7 @@ export default function Home() {
         </Link>
         <div className="bg-[#FFDAA3]/10 border overflow-hidden border-[#FFDAA3]/10 rounded-full mt-2 h-4 w-full">
           <div
-            className="bg-[linear-gradient(180deg,#
-            
-            %,#F7B87D_21%,#F3A155_52%,#E6824B_84%,#D36224_100%)] h-full"
+            className="bg-[linear-gradient(180deg,#FBEDE0_0%,#F7B87D_21%,#F3A155_52%,#E6824B_84%,#D36224_100%)] h-full"
             style={{
               width: `${(user.balance! / user.level!.to_balance) * 100}%`,
             }}
