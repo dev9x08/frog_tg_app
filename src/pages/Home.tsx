@@ -130,18 +130,28 @@ export default function Home() {
         {isConnected ? (
             <button 
               onClick={handleDisconnect} 
-              className="h-6 sm:h-8 text-xs sm:text-sm w-full"
+              className="h-6 sm:h-8 text-xs sm:text-sm w-full flex items-center gap-2"
               style={{cursor: 'pointer'}}
             >
+              <img 
+                src="/images/wallet.png" 
+                alt="wallet"
+                className="w-5 h-5 object-contain"
+              />
               {address?.slice(0, 6)}...{address?.slice(-4)}
             </button>
           ) : (
             <button
               type="button"
               onClick={handleConnect}
-              className="h-6 sm:h-8 text-xs sm:text-sm w-full" 
+              className="h-6 sm:h-8 text-xs sm:text-sm w-full flex items-center gap-2"
               style={{cursor: 'pointer'}}
             >
+              <img 
+                src="/images/connectwallet.png" 
+                alt="wallet"
+                className="w-5 h-5 object-contain"
+              />
               Connect Wallet
             </button>
           )}
