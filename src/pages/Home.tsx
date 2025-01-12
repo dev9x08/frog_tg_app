@@ -128,17 +128,18 @@ export default function Home() {
             {user?.first_name} {user?.last_name}
           </p>
         </div>
-        <div className="flex items-center gap-2 px-3 border-2 rounded-full bg-black/20 border-white/10">
+        <div className="flex items-center gap-2 px-3 py-2 border-2 rounded-full bg-black/20 border-white/10">
         {isConnected ? (
-            <button onClick={handleDisconnect}>
+            <button onClick={handleDisconnect} className="h-8">
               {address?.slice(0, 6)}...{address?.slice(-4)}
             </button>
           ) : (
             <button
               type="button"
               onClick={handleConnect}
+              className="h-8"
             >
-              Connect
+              Connect Wallet
             </button>
           )}
         </div>
