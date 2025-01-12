@@ -34,50 +34,50 @@ export default function Airdrop() {
 
   const handleConnect = async () => {
     try {
-      if (isTelegramWebApp()) {
-        webApp.showPopup(
-          {
-            title: "Connect Wallet",
-            message: "Please connect your wallet",
-            buttons: [
-              {
-                text: "Connect MetaMask",
-                type: "default",
-                id: "connect_metamask",
-              },
-            ],
-          },
-          async (buttonId) => {
-            if (buttonId === "connect_metamask") {
-              webApp.openLink(
-                `https://metamask.app.link/dapp/${window.location.href}`
-              );
-              if (typeof window.ethereum !== "undefined") {
-                try {
-                  const accounts = await window.ethereum.request({
-                    method: "eth_requestAccounts",
-                  });
-                  const walletAddress = accounts[0];
-                  await handleSuccessfulConnection(walletAddress);
-                } catch (error) {
-                  console.error("Error connecting wallet:", error);
-                  webApp.showAlert(
-                    "Failed to connect wallet. Please try again."
-                  );
-                }
-              } else {
-                webApp.showAlert(
-                  "MetaMask not detected. Please install MetaMask first."
-                );
-              }
-            }
-          }
-        );
-      } else {
+      // if (isTelegramWebApp()) {
+      //   webApp.showPopup(
+      //     {
+      //       title: "Connect Wallet",
+      //       message: "Please connect your wallet",
+      //       buttons: [
+      //         {
+      //           text: "Connect MetaMask",
+      //           type: "default",
+      //           id: "connect_metamask",
+      //         },
+      //       ],
+      //     },
+      //     async (buttonId) => {
+      //       if (buttonId === "connect_metamask") {
+      //         webApp.openLink(
+      //           `https://metamask.app.link/dapp/${window.location.href}`
+      //         );
+      //         if (typeof window.ethereum !== "undefined") {
+      //           try {
+      //             const accounts = await window.ethereum.request({
+      //               method: "eth_requestAccounts",
+      //             });
+      //             const walletAddress = accounts[0];
+      //             await handleSuccessfulConnection(walletAddress);
+      //           } catch (error) {
+      //             console.error("Error connecting wallet:", error);
+      //             webApp.showAlert(
+      //               "Failed to connect wallet. Please try again."
+      //             );
+      //           }
+      //         } else {
+      //           webApp.showAlert(
+      //             "MetaMask not detected. Please install MetaMask first."
+      //           );
+      //         }
+      //       }
+      //     }
+      //   );
+      // } else {
         if (InjectedConnector) {
           await connect({ connector: InjectedConnector });
         }
-      }
+      // }
     } catch (error) {
       console.error("Wallet connection error:", error);
       if (webApp) {
