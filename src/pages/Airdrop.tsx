@@ -34,72 +34,51 @@ export default function Airdrop() {
 
   const handleConnect = async () => {
     try {
-      // if (isTelegramWebApp()) {
-      //   webApp.showPopup(
-      //     {
-      //       title: "Connect Wallet",
-      //       message: "Please connect your wallet",
-      //       buttons: [
-      //         {
-      //           text: "Connect MetaMask",
-      //           type: "default",
-      //           id: "connect_metamask",
-      //         },
-      //       ],
-      //     },
-      //     async (buttonId) => {
-      //       if (buttonId === "connect_metamask") {
-      //         webApp.openLink(
-      //           `https://metamask.app.link/dapp/${window.location.href}`
-      //         );
-      //         if (typeof window.ethereum !== "undefined") {
-      //           try {
-      //             const accounts = await window.ethereum.request({
-      //               method: "eth_requestAccounts",
-      //             });
-      //             const walletAddress = accounts[0];
-      //             await handleSuccessfulConnection(walletAddress);
-      //           } catch (error) {
-      //             console.error("Error connecting wallet:", error);
-      //             webApp.showAlert(
-      //               "Failed to connect wallet. Please try again."
-      //             );
-      //           }
-      //         } else {
-      //           webApp.showAlert(
-      //             "MetaMask not detected. Please install MetaMask first."
-      //           );
-      //         }
-      //       }
-      //     }
-      //   );
-      // } else {
-        if (InjectedConnector) {
-          await connect({ connector: InjectedConnector });
+        const hasWallet = typeof window.ethereum !== "undefined";  
+        if (!hasWallet) {
+          if (isTelegramWebApp()) {
+            webApp.showPopup({
+              title: "Wallet Required",
+              message: "Please install MetaMask or another Web3 wallet to continue",
+              buttons: [
+                {
+                  text: "Install MetaMask",
+                  type: "default",
+                  id: "install_metamask"
+                },
+                {
+                  text: "Close",
+                  type: "close"
+                }
+              ]
+            }, (buttonId) => {
+              if (buttonId === "install_metamask") {
+                window.open("https://metamask.io/download/", "_blank");
+              }
+            });
+          } else {
+            window.open("https://metamask.io/download/", "_blank");
+          }
+          return;
         }
-      // }
+        else {
+          if(InjectedConnector) {
+            await connect({ connector: InjectedConnector });
+          }
+        }
     } catch (error) {
-      console.error("Wallet connection error:", error);
+      console.error('Wallet connection error:', error);
       if (webApp) {
-        webApp.showAlert("Failed to connect wallet. Please try again.");
+        webApp.showAlert('Failed to connect wallet. Please try again.');
       }
     }
   };
 
   const handleDisconnect = async () => {
     try {
-      if (isTelegramWebApp()) {
         await disconnect();
-        webApp.showPopup({
-          title: "Disconnected",
-          message: "Wallet disconnected successfully",
-          buttons: [{ text: "Close", type: "close" }],
-        });
-      } else {
-        await disconnect();
-      }
     } catch (error) {
-      console.error("Wallet disconnection error:", error);
+      console.error('Wallet disconnection error:', error);
     }
   };
 

@@ -36,7 +36,7 @@ export default function Home() {
     try {
         const hasWallet = typeof window.ethereum !== "undefined";  
         if (!hasWallet) {
-          if (webApp) {
+          if (isTelegramWebApp()) {
             webApp.showPopup({
               title: "Wallet Required",
               message: "Please install MetaMask or another Web3 wallet to continue",
