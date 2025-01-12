@@ -53,11 +53,11 @@ export default function Home() {
               ]
             }, (buttonId) => {
               if (buttonId === "install_metamask") {
-                window.open("https://metamask.io/download/", "_blank");
+                window.open("https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn", "_blank");
               }
             });
           } else {
-            window.open("https://metamask.io/download/", "_blank");
+            window.open("https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn", "_blank");
           }
           return;
         }
