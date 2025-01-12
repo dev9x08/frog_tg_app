@@ -5,107 +5,31 @@ import UserGameDetails from "@/components/UserGameDetails";
 import levelConfig from "@/config/level-config";
 import { uesStore } from "@/store";
 import { $http } from "@/lib/http";
-import { useAccount, useConnect } from "wagmi";
+import { useAccount } from "wagmi";
 import { useEffect } from "react";
-
-// const isTelegramWebApp = () => {
-
-//   const userAgent = window.navigator.userAgent.toLowerCase();
-//   return (
-//     window.Telegram?.WebApp &&
-//     (userAgent.includes('telegram') || 
-//     window.location.href.includes('tgWebApp') || 
-//     !!window.Telegram.WebApp.initData) 
-//   );
-// };
-
 
 
 export default function Home() {
   const { address, isConnected } = useAccount();
-  const { connect, connectors } = useConnect();
-  // const { disconnect } = useDisconnect();
-  console.log(address, isConnected, connect, connectors);
   const user = useUserStore();
   const { maxLevel } = uesStore();
-  // const InjectedConnector = connectors.find((connector) => connector.id === 'injected');
-  // const webApp = window.Telegram?.WebApp;
-
-  // const handleConnect = async () => {
-  //   try {
-  //       const hasWallet = typeof window.ethereum !== "undefined";  
-  //       if (!hasWallet) {
-  //         if (isTelegramWebApp()) {
-  //           webApp.showPopup({
-  //             title: "Wallet Required",
-  //             message: "Please install MetaMask or another Web3 wallet to continue",
-  //             buttons: [
-  //               {
-  //                 text: "Install MetaMask",
-  //                 type: "default",
-  //                 id: "install_metamask"
-  //               },
-  //               {
-  //                 text: "Close",
-  //                 type: "close"
-  //               }
-  //             ]
-  //           }, (buttonId) => {
-  //             if (buttonId === "install_metamask") {
-  //               window.open("https://metamask.io/download/", "_blank");
-  //             }
-  //           });
-  //         } else {
-  //           window.open("https://metamask.io/download/", "_blank");
-  //         }
-  //         return;
-  //       }
-  //       else {
-  //         if(InjectedConnector) {
-  //           await connect({ connector: InjectedConnector });
-  //         }
-  //       }
-  //   } catch (error) {
-  //     console.error('Wallet connection error:', error);
-  //     if (webApp) {
-  //       webApp.showAlert('Failed to connect wallet. Please try again.');
-  //     }
-  //   }
-  // };
-
-  // const handleDisconnect = async () => {
-  //   try {
-  //       await disconnect();
-  //   } catch (error) {
-  //     console.error('Wallet disconnection error:', error);
-  //   }
-  // };
-
+  
   const handleSuccessfulConnection = async (walletAddress: string) => {
     try {
       await $http.post("/clicker/set-wallet", {
         wallet: walletAddress,
       });
       
-      // if (isTelegramWebApp()) {
-      //   webApp.showPopup({
-      //     title: "Connected",
-      //     message: `Connected with wallet: ${walletAddress}`,
-      //     buttons: [{ text: "Close", type: "close" }]
-      //   });
-      // }
     } catch (error) {
       console.error('Error updating wallet:', error);
     }
   };
-
 
   useEffect(() => {
     if (address && isConnected) {
       handleSuccessfulConnection(address);
     }
   }, [address, isConnected]);
-
 
   return (
     <div
@@ -126,37 +50,7 @@ export default function Home() {
           </p>
         </div>
         <div className="flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 border-2 rounded-full bg-black/20 border-white/10">
-        {/* {isConnected ? (
-            <button 
-              onClick={handleDisconnect} 
-              className="h-6 sm:h-8 text-xs sm:text-sm w-full flex items-center gap-2"
-              style={{cursor: 'pointer'}}
-            >
-              <img 
-                src="/images/wallet.png" 
-                alt="wallet"
-                className="w-5 h-5 object-contain"
-              />
-              {address?.slice(0, 6)}...{address?.slice(-4)}
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={handleConnect}
-              className="h-6 sm:h-8 text-xs sm:text-sm w-full flex items-center gap-2"
-              style={{cursor: 'pointer'}}
-            >
-              <img 
-                src="/images/connectwallet.png" 
-                alt="wallet"
-                className="w-5 h-5 object-contain"
-              />
-              Connect Wallet
-            </button>
-          )} */}
-
-          <appkit-button />
-            
+            <appkit-button />
         </div>
       </header>
       <UserGameDetails className="mt-6" />

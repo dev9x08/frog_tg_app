@@ -2,21 +2,12 @@ import UserGameDetails from "@/components/UserGameDetails";
 import { $http } from "@/lib/http";
 import { useUserStore } from "@/store/user-store";
 import { useEffect, useState } from "react";
-// import { useAccount, useConnect, useDisconnect, useSendTransaction } from "wagmi";
-import { useAccount, useConnect, useDisconnect} from "wagmi";
+// import { useAccount, useConnect, useSendTransaction } from "wagmi";
+import { useAccount, useConnect} from "wagmi";
 import { toast } from "react-toastify";
 import {  } from 'wagmi'
   // import { parseEther } from 'viem'
 
-const isTelegramWebApp = () => {
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  return (
-    window.Telegram?.WebApp &&
-    (userAgent.includes("telegram") ||
-      window.location.href.includes("tgWebApp") ||
-      !!window.Telegram.WebApp.initData)
-  );
-};
 
 export default function Airdrop() {
   const user = useUserStore();
@@ -25,64 +16,9 @@ export default function Airdrop() {
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
   const decimal = 1000000000000000000;
-  const { disconnect } = useDisconnect();
   // const {sendTransaction } = useSendTransaction()
 
   console.log(address, isConnected, connect, connectors);
-  const InjectedConnector = connectors.find(
-    (connector) => connector.id === "injected"
-  );
-  const webApp = window.Telegram?.WebApp;
-
-  const handleConnect = async () => {
-    try {
-        const hasWallet = typeof window.ethereum !== "undefined";  
-        if (!hasWallet) {
-          if (isTelegramWebApp()) {
-            webApp.showPopup({
-              title: "Wallet Required",
-              message: "Please install MetaMask or another Web3 wallet to continue",
-              buttons: [
-                {
-                  text: "Install MetaMask",
-                  type: "default",
-                  id: "install_metamask"
-                },
-                {
-                  text: "Close",
-                  type: "close"
-                }
-              ]
-            }, (buttonId) => {
-              if (buttonId === "install_metamask") {
-                window.open("https://metamask.io/download/", "_blank");
-              }
-            });
-          } else {
-            window.open("https://metamask.io/download/", "_blank");
-          }
-          return;
-        }
-        else {
-          if(InjectedConnector) {
-            await connect({ connector: InjectedConnector });
-          }
-        }
-    } catch (error) {
-      console.error('Wallet connection error:', error);
-      if (webApp) {
-        webApp.showAlert('Failed to connect wallet. Please try again.');
-      }
-    }
-  };
-
-  const handleDisconnect = async () => {
-    try {
-        await disconnect();
-    } catch (error) {
-      console.error('Wallet disconnection error:', error);
-    }
-  };
 
   const handleSuccessfulConnection = async (walletAddress: string) => {
     try {
@@ -109,7 +45,9 @@ export default function Airdrop() {
       // const to = import.meta.env.VITE_ADMIN_WALLET;
       // const feeUnit = import.meta.env.VITE_FEE_PER_THOUSAND_POINTS;
       // const totalFee = (user.balance/1000) * Number(feeUnit);
-      // await sendTransaction({ to, value: parseEther(totalFee.toString())});
+      // const minFee = 0.000001;
+      // const finalFee = Math.max(totalFee, minFee).toFixed(18)
+      // await sendTransaction({ to, value: parseEther(finalFee.toString())});
       await $http
         .post("/clicker/claim-tokens", {
           to_address: address,
@@ -160,32 +98,7 @@ export default function Airdrop() {
           </div>
 
           <div className="flex items-center justify-center mt-5">
-            {isConnected ? (
-              <button
-                onClick={handleDisconnect}
-                className="flex items-center gap-2 px-6 py-2 border-2 rounded-full bg-black/20 border-white/10 mt-5"
-              >
-                <img 
-                  src="/images/wallet.png" 
-                  alt="wallet"
-                  className="w-5 h-5 object-contain"
-                />
-                {address?.slice(0, 6)}...{address?.slice(-4)}
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={handleConnect}
-                className="flex items-center gap-2 px-6 py-2 border-2 rounded-full bg-black/20 border-white/10 mt-5"
-              >
-                <img 
-                  src="/images/connectwallet.png" 
-                  alt="wallet"
-                  className="w-5 h-5 object-contain"
-                />
-                Connect Wallet
-              </button>
-            )}
+            <appkit-button />
           </div>
 
           <div className="flex items-center justify-center mt-5">
