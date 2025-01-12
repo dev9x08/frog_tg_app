@@ -187,16 +187,17 @@ export default function Airdrop() {
             Claim Your Tokens
           </div>
           <div className="text-center text-lg text-white">
-            Tokens earned today can be claimed immediately. Claim your tokens by
-            linking your wallet and joining the token access plan. Unclaimed
-            tokens will expire after days specified.
+            {
+              isTelegramWebApp() ? "Claim your tokens by linking your wallet and joining the token access plan.":
+              "Tokens earned today can be claimed immediately. Claim your tokens by linking your wallet and joining the token access plan. Unclaimed tokens will expire after days specified."
+            }
           </div>
 
           <div className="flex items-center justify-center mt-5">
             {isConnected ? (
               <button
                 onClick={handleDisconnect}
-                className="flex items-center gap-2 px-10 py-2 border-2 rounded-full bg-black/20 border-white/10 mt-10"
+                className="flex items-center gap-2 px-10 py-2 border-2 rounded-full bg-black/20 border-white/10 mt-5"
               >
                 {address?.slice(0, 6)}...{address?.slice(-4)}
               </button>
@@ -204,7 +205,7 @@ export default function Airdrop() {
               <button
                 type="button"
                 onClick={handleConnect}
-                className="flex items-center gap-2 px-10 py-2 border-2 rounded-full bg-black/20 border-white/10 mt-10"
+                className="flex items-center gap-2 px-10 py-2 border-2 rounded-full bg-black/20 border-white/10 mt-5"
               >
                 Connect Wallet
               </button>
@@ -213,7 +214,7 @@ export default function Airdrop() {
 
           <div className="flex items-center justify-center mt-5">
             <button
-              className="flex items-center gap-2 px-10 py-2 border-2 rounded-full bg-black/20 border-white/10 mt-10"
+              className="flex items-center gap-2 px-10 py-2 border-2 rounded-full bg-black/20 border-white/10 mt-5"
               onClick={handleClaim}
             >
               Claim Tokens
@@ -221,7 +222,7 @@ export default function Airdrop() {
           </div>
 
           {txHash ? (
-            <div className=" flex items-center justify-center flex-col mt-10">
+            <div className=" flex items-center justify-center flex-col mt-5">
                 <p>Token Amount: {(Number(tokenAmount)/1000000000000000000).toFixed(3)} DRHM</p>
               <a
                 href={txHash ? "https://testnet.bscscan.com/tx/" + txHash : ""}
