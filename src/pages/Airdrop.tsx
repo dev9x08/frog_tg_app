@@ -2,10 +2,11 @@ import UserGameDetails from "@/components/UserGameDetails";
 import { $http } from "@/lib/http";
 import { useUserStore } from "@/store/user-store";
 import { useEffect, useState } from "react";
-import { useAccount, useConnect, useDisconnect, useSendTransaction } from "wagmi";
+// import { useAccount, useConnect, useDisconnect, useSendTransaction } from "wagmi";
+import { useAccount, useConnect, useDisconnect} from "wagmi";
 import { toast } from "react-toastify";
 import {  } from 'wagmi'
-  import { parseEther } from 'viem'
+  // import { parseEther } from 'viem'
 
 const isTelegramWebApp = () => {
   const userAgent = window.navigator.userAgent.toLowerCase();
@@ -25,7 +26,7 @@ export default function Airdrop() {
   const { connect, connectors } = useConnect();
   const decimal = 1000000000000000000;
   const { disconnect } = useDisconnect();
-  const {sendTransaction } = useSendTransaction()
+  // const {sendTransaction } = useSendTransaction()
 
   console.log(address, isConnected, connect, connectors);
   const InjectedConnector = connectors.find(
