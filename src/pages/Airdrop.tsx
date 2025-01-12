@@ -25,6 +25,7 @@ export default function Airdrop() {
   const [tokenAmount, setTokenAmount] = useState<number | null>(null);
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
+  const decimal = 1000000000000000000;
   const { disconnect } = useDisconnect();
   console.log(address, isConnected, connect, connectors);
   const InjectedConnector = connectors.find(
@@ -202,7 +203,7 @@ export default function Airdrop() {
 
           {txHash ? (
             <div className=" flex items-center justify-center flex-col mt-5">
-                <p>Token Amount: {(Number(tokenAmount)/1000000000000000000).toFixed(3)} DRHM</p>
+                <p>Claimed Tokens: {(Number(tokenAmount)/decimal).toFixed(3)} DRHM</p>
               <a
                 href={txHash ? "https://testnet.bscscan.com/tx/" + txHash : ""}
                 target="_blank"
