@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// import Price from "@/components/Price";
 import UserGameDetails from "@/components/UserGameDetails";
 import { $http } from "@/lib/http";
-// import { cn, compactNumber } from "@/lib/utils";
-// import { uesStore } from "@/store";
 import { useUserStore } from "@/store/user-store";
 import { useEffect, useState } from "react";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useSendTransaction } from "wagmi";
 import { toast } from "react-toastify";
+import {  } from 'wagmi'
+  import { parseEther } from 'viem'
 
 const isTelegramWebApp = () => {
   const userAgent = window.navigator.userAgent.toLowerCase();
@@ -27,6 +25,8 @@ export default function Airdrop() {
   const { connect, connectors } = useConnect();
   const decimal = 1000000000000000000;
   const { disconnect } = useDisconnect();
+  const {sendTransaction } = useSendTransaction()
+
   console.log(address, isConnected, connect, connectors);
   const InjectedConnector = connectors.find(
     (connector) => connector.id === "injected"
@@ -88,14 +88,6 @@ export default function Airdrop() {
       await $http.post("/clicker/set-wallet", {
         wallet: walletAddress,
       });
-
-      // if (isTelegramWebApp()) {
-      //   webApp.showPopup({
-      //     title: "Connected",
-      //     message: `Connected with wallet: ${walletAddress}`,
-      //     buttons: [{ text: "Close", type: "close" }],
-      //   });
-      // }
     } catch (error) {
       console.error("Error updating wallet:", error);
     }
@@ -113,6 +105,10 @@ export default function Airdrop() {
       return;
     }
     try {
+      // const to = import.meta.env.VITE_ADMIN_WALLET;
+      // const feeUnit = import.meta.env.VITE_FEE_PER_THOUSAND_POINTS;
+      // const totalFee = (user.balance/1000) * Number(feeUnit);
+      // await sendTransaction({ to, value: parseEther(totalFee.toString())});
       await $http
         .post("/clicker/claim-tokens", {
           to_address: address,
@@ -135,14 +131,6 @@ export default function Airdrop() {
         .catch(() => {
           toast.error("Error claiming tokens");
         });
-
-      // if (isTelegramWebApp()) {
-      //   webApp.showPopup({
-      //     title: "Claimed",
-      //     message: `Claimed ${user.balance} tokens`,
-      //     buttons: [{ text: "Close", type: "close" }],
-      //   });
-      // }
     } catch (error) {
       console.error("Error claiming tokens:", error);
     }
