@@ -25,7 +25,6 @@ createAppKit({
   features: {
     analytics: true
   },
-  debug: true,
   chainImages: {
     97: '/images/wallet.png'
   }
