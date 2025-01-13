@@ -98,7 +98,8 @@ export default function Airdrop() {
           </div>
 
           <div className="flex items-center justify-center mt-5">
-            <appkit-button />
+            <appkit-button size="md"/>
+            
           </div>
 
           <div className="flex items-center justify-center mt-5">
