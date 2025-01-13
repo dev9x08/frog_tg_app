@@ -81,16 +81,22 @@ export default function UserTap(props: React.HTMLProps<HTMLDivElement>) {
       <div className="mt-4 mb-8">
         <button
           ref={userTapButtonRef}
-          className="flex items-center justify-center mx-auto transition-all rounded-full outline-none select-none disabled:opacity-80 disabled:cursor-not-allowed"
+          className="flex items-center justify-center mx-auto transition-all rounded-full outline-none select-none disabled:opacity-80 disabled:cursor-not-allowed touch-none"
           disabled={user.available_energy < user.earn_per_tap}
           // onClick={tabMe}
           onPointerUp={tabMe}
+          style={{WebkitTapHighlightColor: 'transparent'}}
         >
           <img
             src={levelConfig.frogs[user.level?.level || 1]}
-            alt="level image"
+            alt="level image" 
             className="object-contain max-w-full w-80 h-80 rounded-full"
-            style={{ filter: levelConfig.filter[user.level?.level || 1] }}
+            style={{ 
+              filter: levelConfig.filter[user.level?.level || 1],
+              WebkitTapHighlightColor: 'transparent',
+              WebkitTouchCallout: 'none',
+              userSelect: 'none'
+            }}
           />
         </button>
       </div>
