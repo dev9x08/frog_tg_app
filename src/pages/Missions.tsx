@@ -28,6 +28,13 @@ export default function Missions() {
     enabled: !!activeType?.id,
   });
 
+  const missionImgs = [
+    "/images/missions/1.png",
+    "/images/missions/2.png",
+    "/images/missions/3.png",
+    "/images/missions/4.png",
+  ];
+
   return (
     <div className="flex flex-col justify-end bg-[url('/images/bg.png')] bg-cover flex-1">
       <div className="flex flex-col flex-1 w-full h-full px-6 pb-24 mt-12 modal-body">
@@ -93,7 +100,7 @@ export default function Missions() {
                   >
                     <div className="flex items-start flex-1 space-x-3">
                       <img
-                        src={mission.image}
+                        src={missionImgs[key]}
                         alt={mission.name}
                         className="object-contain w-12 h-12 sm:w-16 sm:h-16"
                       />
