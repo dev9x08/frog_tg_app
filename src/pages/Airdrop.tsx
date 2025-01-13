@@ -120,7 +120,7 @@ export default function Airdrop() {
                     {(Number(tokenAmount)/decimal).toFixed(3)} DRHM
                   </div>
                   <a
-                    href={txHash ? "https://testnet.bscscan.com/tx/" + txHash : ""}
+                    href={txHash ? "https://bscscan.com/tx/" + txHash : ""}
                     target="_blank"
                     className="inline-flex items-center gap-2 px-4 py-2 mt-4 text-sm font-medium transition-colors rounded-lg bg-white/10 hover:bg-white/20"
                   >
