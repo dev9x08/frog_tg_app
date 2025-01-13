@@ -42,6 +42,10 @@ const router = createBrowserRouter([
         path: "airdrop",
         element: <Airdrop />,
       },
+      {
+        path: "/soon",
+        element: <Home />,
+      },
     ],
   },
 ]);

@@ -7,7 +7,7 @@ const links = [
   { name: "Friends", link: "/friends", image: "/images/friends.png" },
   { name: "Bounty", link: "/earn", image: "/images/bounty.png" },
   {name: "Airdrop", link: "/airdrop", image: "/images/airdrop.png"},
-  {name: "Soon", link: "/", image: "/images/soon.png"}
+  {name: "Soon", link: "/soon", image: "/images/soon.png"}
 ];
 
 export default function AppBar() {
