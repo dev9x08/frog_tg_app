@@ -90,7 +90,7 @@ export default function UserTap(props: React.HTMLProps<HTMLDivElement>) {
           <img
             src={levelConfig.frogs[user.level?.level || 1]}
             alt="level image" 
-            className="object-contain max-w-full w-80 h-80 rounded-full"
+            className="object-contain max-w-full w-60 h-60 md:w-80 md:h-80 rounded-full"
             style={{ 
               filter: levelConfig.filter[user.level?.level || 1],
               WebkitTapHighlightColor: 'transparent',
