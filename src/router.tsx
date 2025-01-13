@@ -7,6 +7,7 @@ import Earn from "./pages/Earn";
 import Friends from "./pages/Friends";
 import Missions from "./pages/Missions";
 import Airdrop from "./pages/Airdrop";
+import Soon from "./pages/Soon";
 
 const router = createBrowserRouter([
   {
@@ -43,8 +44,8 @@ const router = createBrowserRouter([
         element: <Airdrop />,
       },
       {
-        path: "/soon",
-        element: <Home />,
+        path: "soon",
+        element: <Soon />,
       },
     ],
   },
