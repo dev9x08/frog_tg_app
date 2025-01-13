@@ -117,7 +117,7 @@ export default function UserTap(props: React.HTMLProps<HTMLDivElement>) {
           <img
             src="/images/coin.png"
             alt="coin"
-            className="object-contain w-8 h-8"
+            className="object-contain w-7 h-7"
           />
           <span className="text-xs font-bold">
             {user.available_energy} / {user.max_energy}
@@ -132,7 +132,7 @@ export default function UserTap(props: React.HTMLProps<HTMLDivElement>) {
           <img
             src="/images/boost.png"
             alt="boost"
-            className="object-contain w-8 h-8"
+            className="object-contain w-10 h-10"
           />
         </Link>
       </div>
