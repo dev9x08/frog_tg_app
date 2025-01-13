@@ -49,7 +49,7 @@ export default function Home() {
             {user?.first_name} {user?.last_name}
           </p>
         </div>
-        <div className="flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 border-2 rounded-full bg-black/20 border-white/10">
+        <div className="flex items-center gap-2">
             <appkit-button />
         </div>
       </header>
