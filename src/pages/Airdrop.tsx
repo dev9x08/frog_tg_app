@@ -61,7 +61,7 @@ export default function Airdrop() {
               user.balance = 0;
           } else {
             if (res.data.locked) {
-              toast.error(res.data.message);
+              toast.info(res.data.message);
             } else {
               toast.error(res.data.message);
             }
