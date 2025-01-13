@@ -92,7 +92,7 @@ export default function Leaderboard() {
           levels?.[activeIndex]?.level === level?.level && (
             <div className="mt-2">
               <div className="flex items-center justify-between gap-2 ">
-                <div className="flex items-center text-2xl font-bold">
+                <div className="flex items-center font-bold">
                   <span>{level.name}</span>
                 </div>
                 <span className="font-medium">
