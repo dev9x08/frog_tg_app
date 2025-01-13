@@ -50,7 +50,7 @@ export default function MissionDrawer({
   return (
     <Drawer {...props}>
       <img
-        src={mission.image}
+        src={mission.image.replace("https://poolparty.prolocalize.com/storage", "")}
         alt={mission.name}
         className="object-contain h-32 mx-auto"
       />
