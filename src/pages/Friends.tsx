@@ -12,7 +12,7 @@ import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 const shareMessage = encodeURI(
-  "Play Cool Frog with me!"
+  "Play DARAHIM with me!"
 );
 
 export default function Friends() {

@@ -4,10 +4,10 @@ import { ToastContainer } from "react-toastify";
 import { WagmiProvider } from 'wagmi'
 import "react-toastify/dist/ReactToastify.css";
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-import { bscTestnet, bsc } from '@reown/appkit/networks'
+import { bsc} from '@reown/appkit/networks'
 import { createAppKit, useAppKitTheme } from '@reown/appkit/react'
 const projectId = import.meta.env.VITE_APP_KIT_ID;
-const networks = [bscTestnet, bsc];
+const networks = [bsc];
 
 
 

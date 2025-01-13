@@ -36,7 +36,7 @@ export default function SplashScreen() {
       <div className="flex flex-col items-center w-full">
         <div className="flex flex-col items-center w-full pb-6 bg-[url('/images/blur.png')] bg-cover bg-center">
           <h1 className="text-6xl font-medium text-center uppercase text-shadow">
-            THE COOL FROG
+            THE DARAHIM
           </h1>
           <img
             src="/images/loader.png"

@@ -23,7 +23,7 @@ export default function FirstTimeScreen({ startGame }: Props) {
         <img src="/images/chest.png" alt="box" className="w-full" />
         <div className="w-full px-12">
           <Button className="w-full uppercase" onClick={() => startGame()}>
-            Join the cool frog
+            Join the DARAHIM
           </Button>
         </div>
       </div>
