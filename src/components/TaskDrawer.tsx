@@ -83,7 +83,8 @@ export default function TaskDrawer({
         asChild
         onClick={() => submitMutation.mutate()}
       >
-        <a href={task.link} target="_blank">
+        <a href="https://darahim.co" target="_blank">
+        {/* <a href={task.link} target="_blank"> */}
           {task.action_name}
         </a>
       </Button>
