@@ -18,7 +18,7 @@ export default function FirstTimeScreen({ startGame }: Props) {
             alt="coins"
             className="object-contain w-14 h-14"
           />
-          <span className="text-3xl font-bold text-gradient">10,000,000</span>
+          <span className="text-3xl font-bold text-gradient">1000000</span>
         </div>
         <img src="/images/chest.png" alt="box" className="w-full" />
         <div className="w-full px-12">
