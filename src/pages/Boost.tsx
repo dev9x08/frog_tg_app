@@ -72,7 +72,7 @@ export default function Boost() {
   const buyBoost = useMutation({
     mutationFn: (boost: BoosterTypes) =>
       boost !== "full_energy"
-        ? $http.post("/clicker/buy-booster", { booster_type: boost })
+        ? $http.post("/clicker/buy-booster", { booster_type: boost, cost: boosters[activeBooster].cost})
         : $http.post("/clicker/use-daily-booster"),
     onSuccess: (response) => {
       toast.success(response.data.message);
