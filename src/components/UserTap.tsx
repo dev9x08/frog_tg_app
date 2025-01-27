@@ -10,7 +10,7 @@ export default function UserTap(props: React.HTMLProps<HTMLDivElement>) {
   const userAnimateRef = useRef<HTMLDivElement | null>(null);
   const userTapButtonRef = useRef<HTMLButtonElement | null>(null);
   const [clicksCount, setClicksCount] = useState(0);
-  const debounceClicksCount = useDebounce(clicksCount, 1000);
+  const debounceClicksCount = useDebounce(clicksCount, 1);
 
   const { clicks, addClick, removeClick } = useClicksStore();
   const { UserTap, incraseEnergy, ...user } = useUserStore();
