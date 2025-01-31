@@ -86,7 +86,7 @@ export default function Boost() {
         uesStore.setState((state) => {
           state.boosters[activeBooster].level += 1;
           state.boosters[activeBooster].cost =
-            1000 * Math.pow(2, state.boosters[activeBooster].level - 1);
+            1000 * Math.pow(state.boosters[activeBooster].level - 1,2);
           return state;
         });
       } else {
